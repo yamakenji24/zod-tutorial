@@ -3,9 +3,12 @@
 import { expect, it } from "vitest";
 import { z } from "zod";
 
+const ACCESS = ['public', 'private'] as const;
 const Form = z.object({
   repoName: z.string(),
-  privacyLevel: z.string(),
+  // privacyLevel: z.union([z.literal('public'),z.literal('private')]),
+  // privacyLevel: z.literal('public').or(z.literal('private'))
+  privacyLevel: z.enum(ACCESS),
   //              ^ 🕵️‍♂️
 });
 

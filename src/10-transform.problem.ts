@@ -3,9 +3,14 @@
 import { expect, it } from "vitest";
 import { z } from "zod";
 
-const StarWarsPerson = z.object({
-  name: z.string(),
-});
+const StarWarsPerson = z
+  .object({
+    name: z.string(),
+  })
+  .transform((val) => ({
+    ...val,
+    nameAsArray: val.name.split(" "),
+  }));
 //^ 🕵️‍♂️
 
 const StarWarsPeopleResults = z.object({
@@ -14,7 +19,7 @@ const StarWarsPeopleResults = z.object({
 
 export const fetchStarWarsPeople = async () => {
   const data = await fetch("https://swapi.dev/api/people/").then((res) =>
-    res.json(),
+    res.json()
   );
 
   const parsedData = StarWarsPeopleResults.parse(data);

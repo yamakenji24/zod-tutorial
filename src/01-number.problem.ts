@@ -5,6 +5,12 @@ import { z } from "zod";
 //       ^ 🕵️‍♂️
 
 export const toString = (num: unknown) => {
+  const isNumber = z.number({
+    required_error: 'Expected number, received string',
+    invalid_type_error: 'Expected number, received string'
+  })
+
+  isNumber.parse(num)
   return String(num);
 };
 
